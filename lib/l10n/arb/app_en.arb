@@ -1,0 +1,320 @@
+{
+  "@@locale": "en",
+  "appName": "RentLOG",
+  "retry": "Try again",
+  "cancel": "Cancel",
+  "save": "Save",
+  "genericError": "Something went wrong. Please try again.",
+  "networkError": "No connection. Check your internet and try again.",
+  "notInPlan": "This isn't included in your current plan.",
+  "sessionExpired": "You were signed out. Please sign in again.",
+  "openOnWeb": "Open on web",
+  "openOnWebHint": "More options are available in the web app.",
+  "signInTitle": "Sign in",
+  "signInSubtitle": "Enter your email and we'll send you a sign-in code.",
+  "emailLabel": "Email",
+  "sendCode": "Send code",
+  "invalidEmail": "Enter a valid email address.",
+  "codeTitle": "Check your email",
+  "codeSubtitle": "We sent a 6-digit code to {email}.",
+  "@codeSubtitle": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "codeLabel": "Code",
+  "verify": "Continue",
+  "resendCode": "Send a new code",
+  "codeResent": "New code sent.",
+  "useDifferentEmail": "Use a different email",
+  "invalidCode": "That code isn't right. Check it and try again.",
+  "noAccountPrompt": "New to RentLOG?",
+  "createAccount": "Create account",
+  "haveAccountPrompt": "Already have an account?",
+  "signUpTitle": "Create account",
+  "signUpSubtitle": "We'll email you a code to confirm your address.",
+  "firstNameLabel": "First name",
+  "lastNameLabel": "Last name",
+  "passwordLabel": "Password",
+  "passwordHint": "At least 8 characters.",
+  "acceptTermsPrefix": "I agree to the ",
+  "termsLink": "Terms",
+  "acceptTermsAnd": " and ",
+  "privacyLink": "Privacy Policy",
+  "fieldRequired": "Required.",
+  "mustAcceptTerms": "Please accept the terms to continue.",
+  "noAccountForEmail": "There's no account for this email yet. Create one?",
+  "accountExists": "An account with this email already exists. Sign in instead.",
+  "passwordTooShort": "The password must be at least 8 characters.",
+  "passwordPwned": "This password has appeared in a data breach. Choose another one.",
+  "signUpBlocked": "Sign-up from the app is blocked right now. Create your account on rent-log.app and sign in here.",
+  "onboardingTitle": "Welcome to RentLOG",
+  "onboardingSubtitle": "What would you like to do?",
+  "onboardingTenant": "I have an invite code",
+  "onboardingTenantHint": "Your landlord gave you an 8-character code.",
+  "onboardingLandlord": "I rent out property",
+  "onboardingLandlordHint": "Track rent, costs and payments.",
+  "inviteTitle": "Enter invite code",
+  "inviteLabel": "Invite code",
+  "inviteCheck": "Check code",
+  "inviteJoin": "Join",
+  "inviteFor": "Lease for {tenant}",
+  "@inviteFor": {
+    "placeholders": {
+      "tenant": {
+        "type": "String"
+      }
+    }
+  },
+  "inviteInvalid": "This code isn't valid.",
+  "inviteRevoked": "This code was revoked. Ask your landlord for a new one.",
+  "inviteUsed": "This code has already been used.",
+  "navHome": "Home",
+  "navDocuments": "Documents",
+  "navSettings": "Settings",
+  "navOverview": "Overview",
+  "navLeases": "Leases",
+  "navProperties": "Properties",
+  "monthlyRent": "Monthly rent",
+  "deposit": "Deposit",
+  "history": "History",
+  "rent": "Rent",
+  "costsForMonth": "Costs for {month}",
+  "@costsForMonth": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "total": "Total",
+  "creditCarried": "Overpayment from {month}",
+  "@creditCarried": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "debtCarried": "Underpayment from {month}",
+  "@debtCarried": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "payableTotal": "To pay",
+  "statusPaid": "Paid",
+  "statusOverdue": "Overdue",
+  "statusDue": "Due",
+  "delayRent": "Rent +{days} days",
+  "@delayRent": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "delayUtilities": "Utilities +{days} days",
+  "@delayUtilities": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "dueOn": "Due {date}",
+  "@dueOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "paidOn": "Paid {date}",
+  "@paidOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "noLease": "You're not connected to a lease yet. Ask your landlord for an invite code.",
+  "enterInviteCode": "Enter invite code",
+  "noCharges": "No charges yet.",
+  "chooseLease": "Choose a lease",
+  "meters": "Meters",
+  "meterReading": "Reading",
+  "meterUsage": "Usage",
+  "documentsEmpty": "Your landlord hasn't shared any documents yet.",
+  "documentUnavailable": "This document is no longer available.",
+  "dashRentThisMonth": "Rent this month",
+  "dashUtilitiesThisMonth": "Utilities this month",
+  "dashOverdue": "Overdue",
+  "dashOverdueCount": "{count, plural, =1{1 item} other{{count} items}}",
+  "@dashOverdueCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "dashExpectedRent": "Expected {amount}/mo",
+  "@dashExpectedRent": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "dashCollectedYear": "Collected {year}",
+  "@dashCollectedYear": {
+    "placeholders": {
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "dashNeedsAttention": "Needs attention",
+  "dashAllClear": "Nothing overdue or due right now.",
+  "dashLeaseOverdue": "Overdue {amount}",
+  "@dashLeaseOverdue": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "dashLeaseOk": "No overdue",
+  "leasesEmpty": "No leases yet. Add your first one in the web app.",
+  "leaseStatusActive": "Active",
+  "leaseStatusDraft": "Draft",
+  "leaseStatusEnded": "Ended",
+  "unpaidTotal": "Unpaid {amount}",
+  "@unpaidTotal": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "propertiesEmpty": "No properties yet. Add them in the web app.",
+  "unitsCount": "{count, plural, =0{No units} =1{1 unit} other{{count} units}}",
+  "@unitsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ownerOccupied": "Owner-occupied",
+  "markPaid": "Mark paid",
+  "pay": "Pay",
+  "paidAmountLabel": "Paid",
+  "paidAmountHint": "Enter the amount actually transferred. Rounding up is deducted from the next month's costs.",
+  "paymentDate": "Payment date",
+  "undoPayment": "Undo payment",
+  "saveCosts": "Save costs",
+  "publishMonth": "Publish month",
+  "published": "Published",
+  "costsSaved": "Costs saved.",
+  "monthPublished": "Published. Tenants have been notified.",
+  "enterBillHint": "Enter the total bill in the web app first.",
+  "billShort": "Bill",
+  "tenantUsage": "Tenant usage",
+  "amount": "Amount",
+  "allocationConsumption": "By consumption",
+  "allocationFixed": "Fixed",
+  "allocationPercentage": "Percentage",
+  "allocationBillMinusFixed": "Bill minus fixed",
+  "allocationManual": "Manual",
+  "creditForward": "Carried forward: {amount}",
+  "@creditForward": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "debtForward": "Owed forward: {amount}",
+  "@debtForward": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "noRules": "No cost rules on this lease. Add them in the web app.",
+  "rentAmount": "Rent amount",
+  "settingsLanguage": "Language",
+  "languageSystem": "Phone default",
+  "settingsNotifications": "Notifications",
+  "notificationsOn": "On",
+  "notificationsOff": "Off. Turn them on in your phone's settings.",
+  "settingsSubscription": "Subscription",
+  "planFree": "Free",
+  "planPro": "Pro",
+  "planBusiness": "Business",
+  "planLegacy": "Full access",
+  "renewsOn": "Renews {date}",
+  "@renewsOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "usageProperties": "Properties: {used} / {limit}",
+  "@usageProperties": {
+    "placeholders": {
+      "used": {
+        "type": "int"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "usageLeases": "Leases: {used} / {limit}",
+  "@usageLeases": {
+    "placeholders": {
+      "used": {
+        "type": "int"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "openWebApp": "Open RentLOG on the web",
+  "switchToTenant": "Switch to tenant view",
+  "switchToLandlord": "Switch to landlord view",
+  "signOut": "Sign out",
+  "deleteAccount": "Delete account",
+  "deleteAccountTitle": "Delete your account?",
+  "deleteAccountBody": "Your access to leases is removed right away. Properties and leases you own are permanently deleted after 30 days. Sign in again before then to cancel.",
+  "deleteAccountConfirm": "Delete",
+  "deletionScheduled": "Your account is scheduled for deletion on {date}.",
+  "@deletionScheduled": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "cancelDeletion": "Keep my account",
+  "appVersion": "Version {version}",
+  "@appVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationChannelName": "Charges and reminders",
+  "notificationChannelDescription": "New costs to pay and rent reminders.",
+  "defaultOrganizationName": "My rentals"
+}
