@@ -1038,6 +1038,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'My rentals'**
   String get defaultOrganizationName;
+
+  /// No description provided for @showDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Show details'**
+  String get showDetails;
+
+  /// No description provided for @hideDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide details'**
+  String get hideDetails;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

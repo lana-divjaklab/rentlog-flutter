@@ -156,5 +156,7 @@
   "appVersion": "Različica {version}",
   "notificationChannelName": "Obračuni in opomniki",
   "notificationChannelDescription": "Novi stroški za plačilo in opomniki za najemnino.",
-  "defaultOrganizationName": "Moje najemnine"
+  "defaultOrganizationName": "Moje najemnine",
+  "showDetails": "Pokaži podrobnosti",
+  "hideDetails": "Skrij podrobnosti"
 }

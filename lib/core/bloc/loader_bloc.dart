@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:rentlog/core/bloc/load_state.dart';
+import 'package:rentlog/core/log.dart';
 
 part 'loader_bloc.freezed.dart';
 
@@ -32,7 +33,8 @@ class LoaderBloc<T> extends Bloc<LoaderEvent, LoadState<T>> {
     );
     try {
       emit(LoadState.success(await _load()));
-    } on Object catch (error) {
+    } on Object catch (error, stack) {
+      logError('Loading $T', error, stack);
       // A failed refresh keeps what's on screen; only a first load fails.
       emit(
         refreshing && previous != null

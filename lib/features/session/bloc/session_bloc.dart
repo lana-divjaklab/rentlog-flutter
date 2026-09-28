@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:rentlog/core/auth/clerk_api.dart';
 import 'package:rentlog/core/convex/convex_exception.dart';
+import 'package:rentlog/core/log.dart';
 import 'package:rentlog/core/push/push_service.dart';
 import 'package:rentlog/features/auth/data/auth_models.dart';
 import 'package:rentlog/features/auth/data/auth_repository.dart';
@@ -87,7 +88,8 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
         return;
       }
       await _enter(user, emit);
-    } on ClerkApiException catch (error) {
+    } on ClerkApiException catch (error, stack) {
+      logError('Restoring session', error, stack);
       emit(SessionState.unavailable(error: error));
     }
   }
@@ -110,10 +112,14 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
       }
       emit(_readyState(user, memberships));
       unawaited(_push.register(_session));
-    } on ConvexAuthException {
+    } on ConvexAuthException catch (error, stack) {
+      logError('Loading account (auth)', error, stack);
       await _auth.signOut();
       emit(const SessionState.signedOut(expired: true));
-    } on ConvexException catch (error) {
+    } on Object catch (error, stack) {
+      // Convex errors, and anything else such as a response this version
+      // can't read: show the retry screen rather than leave sign-in hanging.
+      logError('Loading account', error, stack);
       emit(SessionState.unavailable(error: error));
     }
   }

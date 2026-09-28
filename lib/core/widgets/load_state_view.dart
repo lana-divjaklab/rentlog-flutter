@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rentlog/core/bloc/load_state.dart';
 import 'package:rentlog/core/theme/app_colors.dart';
+import 'package:rentlog/core/widgets/error_details.dart';
 import 'package:rentlog/core/widgets/error_text.dart';
 import 'package:rentlog/l10n/l10n.dart';
 
@@ -23,6 +24,7 @@ class LoadStateView<T> extends StatelessWidget {
     LoadInProgress<T>() => const Center(child: CircularProgressIndicator()),
     LoadFailure<T>(:final error) => ErrorState(
       message: describeError(context, error),
+      detail: errorDetail(error),
       onRetry: onRefresh,
     ),
     LoadSuccess<T>(:final data) => RefreshIndicator(
@@ -35,10 +37,16 @@ class LoadStateView<T> extends StatelessWidget {
 }
 
 class ErrorState extends StatelessWidget {
-  const ErrorState({required this.message, required this.onRetry, super.key});
+  const ErrorState({
+    required this.message,
+    required this.onRetry,
+    this.detail,
+    super.key,
+  });
 
   final String message;
   final VoidCallback onRetry;
+  final String? detail;
 
   @override
   Widget build(BuildContext context) => Center(
@@ -52,6 +60,10 @@ class ErrorState extends StatelessWidget {
           Text(message, textAlign: TextAlign.center),
           const SizedBox(height: 16),
           OutlinedButton(onPressed: onRetry, child: Text(context.l10n.retry)),
+          if (detail != null) ...[
+            const SizedBox(height: 8),
+            ErrorDetails(detail!),
+          ],
         ],
       ),
     ),

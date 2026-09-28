@@ -30,6 +30,9 @@ abstract class AuthFlowState with _$AuthFlowState {
     @Default(false) bool busy,
     PendingVerification? pending,
     AuthFailure? failure,
+
+    /// Clerk's own words for [failure], shown under "Show details".
+    String? failureDetail,
     @Default(false) bool codeResent,
 
     /// Set once the code is accepted; the screen hands it to the session.
@@ -68,7 +71,7 @@ class AuthFlowBloc extends Bloc<AuthFlowEvent, AuthFlowState> {
         state.copyWith(step: AuthStep.code, busy: false, pending: pending),
       );
     } on AuthException catch (e) {
-      emit(state.copyWith(busy: false, failure: e.failure));
+      emit(state.copyWith(busy: false, failure: e.failure, failureDetail: e.detail));
     }
   }
 
@@ -93,7 +96,7 @@ class AuthFlowBloc extends Bloc<AuthFlowEvent, AuthFlowState> {
         state.copyWith(step: AuthStep.code, busy: false, pending: pending),
       );
     } on AuthException catch (e) {
-      emit(state.copyWith(busy: false, failure: e.failure));
+      emit(state.copyWith(busy: false, failure: e.failure, failureDetail: e.detail));
     }
   }
 
@@ -110,7 +113,7 @@ class AuthFlowBloc extends Bloc<AuthFlowEvent, AuthFlowState> {
       final user = await _auth.verifyCode(pending, code);
       emit(state.copyWith(busy: false, user: user));
     } on AuthException catch (e) {
-      emit(state.copyWith(busy: false, failure: e.failure));
+      emit(state.copyWith(busy: false, failure: e.failure, failureDetail: e.detail));
     }
   }
 
@@ -125,7 +128,7 @@ class AuthFlowBloc extends Bloc<AuthFlowEvent, AuthFlowState> {
       await _auth.resendCode(pending);
       emit(state.copyWith(busy: false, codeResent: true));
     } on AuthException catch (e) {
-      emit(state.copyWith(busy: false, failure: e.failure));
+      emit(state.copyWith(busy: false, failure: e.failure, failureDetail: e.detail));
     }
   }
 }

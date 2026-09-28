@@ -24,14 +24,19 @@ uses the same Clerk accounts.
 
 ```bash
 flutter pub get
-dart run build_runner build
-flutter run --dart-define-from-file=config/production.json
+flutter run
 ```
 
-For a dev deployment, copy `config/development.example.json` to
-`config/development.json`, which is gitignored, and fill it in.
+The defaults in `lib/core/config/env.dart` point at production, so plain
+`flutter run` (or Run in Xcode or an IDE) needs nothing else. To point at a
+dev deployment, copy `config/development.example.json` to
+`config/development.json` (gitignored), fill it in, and run with
+`--dart-define-from-file=config/development.json`.
 
-## Configuration (`config/<flavor>.json`)
+After changing a freezed/json model, regenerate with
+`dart run build_runner build`.
+
+## Configuration (`config/<flavor>.json`, overriding the defaults in `env.dart`)
 
 Every value here is public. These are the same identifiers the web app ships
 to every browser. No secret belongs in the app.

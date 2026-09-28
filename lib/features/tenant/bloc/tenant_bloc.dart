@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:rentlog/core/bloc/load_state.dart';
+import 'package:rentlog/core/log.dart';
 import 'package:rentlog/core/models/enums.dart';
 import 'package:rentlog/features/tenant/data/tenant_models.dart';
 import 'package:rentlog/features/tenant/data/tenant_repository.dart';
@@ -77,7 +78,8 @@ class TenantBloc extends Bloc<TenantEvent, LoadState<TenantData>> {
           ),
         ),
       );
-    } on Object catch (error) {
+    } on Object catch (error, stack) {
+      logError('Loading tenant overview', error, stack);
       // A failed refresh keeps what's on screen; only a first load fails.
       emit(
         previous != null && refreshing

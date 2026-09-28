@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:rentlog/core/bloc/load_state.dart';
+import 'package:rentlog/core/log.dart';
 import 'package:rentlog/core/push/push_service.dart';
 import 'package:rentlog/features/landlord/data/landlord_models.dart';
 import 'package:rentlog/features/landlord/data/landlord_repository.dart';
@@ -65,7 +66,8 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     if (orgId == null) return;
     try {
       emit(state.copyWith(billing: LoadState.success(await _landlord.billing(orgId))));
-    } on Object catch (error) {
+    } on Object catch (error, stack) {
+      logError('Loading billing', error, stack);
       emit(state.copyWith(billing: LoadState.failure(error)));
     }
   }
@@ -89,7 +91,8 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     try {
       await _session.requestAccountDeletion();
       emit(state.copyWith(deleting: false, deleted: true));
-    } on Object catch (error) {
+    } on Object catch (error, stack) {
+      logError('Account deletion', error, stack);
       emit(state.copyWith(deleting: false, error: error));
     }
   }

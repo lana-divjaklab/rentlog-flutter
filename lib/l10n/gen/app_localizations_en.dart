@@ -538,4 +538,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get defaultOrganizationName => 'My rentals';
+
+  @override
+  String get showDetails => 'Show details';
+
+  @override
+  String get hideDetails => 'Hide details';
 }

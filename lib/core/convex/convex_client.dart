@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:rentlog/core/convex/convex_exception.dart';
+import 'package:rentlog/core/log.dart';
 
 /// Supplies the Clerk-issued JWT Convex verifies (`convex/auth.config.ts`).
 abstract interface class ConvexTokenProvider {
@@ -66,6 +67,7 @@ class ConvexClient {
     }
 
     if (response.statusCode == 401) {
+      logError('Convex $kind $path (401${isRetry ? ', after refresh' : ''})', response.data ?? '');
       // Clerk session tokens live a minute; one may expire in flight.
       if (!isRetry && token != null) {
         return await _call(kind, path, args, isRetry: true);
@@ -80,7 +82,9 @@ class ConvexClient {
     if (body['status'] == 'success') {
       return body['value'];
     }
-    throw _errorFrom(body['errorMessage']?.toString() ?? 'Unknown error');
+    final message = body['errorMessage']?.toString() ?? 'Unknown error';
+    logError('Convex $kind $path (${response.statusCode})', message);
+    throw _errorFrom(message);
   }
 
   static ConvexException _errorFrom(String message) {

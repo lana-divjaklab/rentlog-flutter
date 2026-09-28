@@ -542,4 +542,10 @@ class AppLocalizationsSl extends AppLocalizations {
 
   @override
   String get defaultOrganizationName => 'Moje najemnine';
+
+  @override
+  String get showDetails => 'Pokaži podrobnosti';
+
+  @override
+  String get hideDetails => 'Skrij podrobnosti';
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rentlog/core/theme/app_colors.dart';
+import 'package:rentlog/core/widgets/error_details.dart';
 import 'package:rentlog/core/widgets/open_on_web_tile.dart';
 import 'package:rentlog/core/widgets/rl_logo.dart';
 import 'package:rentlog/features/auth/bloc/auth_flow_bloc.dart';
@@ -111,7 +112,7 @@ class _EmailStepState extends State<_EmailStep> {
         ),
         if (state.failure != null) ...[
           const SizedBox(height: 12),
-          _FailureText(state.failure!),
+          _FailureText(state.failure!, detail: state.failureDetail),
           if (state.failure == AuthFailure.noAccount)
             Align(
               alignment: Alignment.centerLeft,
@@ -296,7 +297,7 @@ class _SignUpStepState extends State<_SignUpStep> {
               ),
             if (state.failure != null) ...[
               const SizedBox(height: 12),
-              _FailureText(state.failure!),
+              _FailureText(state.failure!, detail: state.failureDetail),
             ],
             const SizedBox(height: 20),
             _SubmitButton(
@@ -364,7 +365,7 @@ class _CodeStepState extends State<_CodeStep> {
         ),
         if (state.failure != null) ...[
           const SizedBox(height: 12),
-          _FailureText(state.failure!),
+          _FailureText(state.failure!, detail: state.failureDetail),
         ],
         if (state.codeResent) ...[
           const SizedBox(height: 12),
@@ -464,9 +465,10 @@ class _SwitchPrompt extends StatelessWidget {
 }
 
 class _FailureText extends StatelessWidget {
-  const _FailureText(this.failure);
+  const _FailureText(this.failure, {this.detail});
 
   final AuthFailure failure;
+  final String? detail;
 
   @override
   Widget build(BuildContext context) {
@@ -482,7 +484,12 @@ class _FailureText extends StatelessWidget {
       AuthFailure.network => l10n.networkError,
       AuthFailure.unknown => l10n.genericError,
     };
-    return Text(text, style: const TextStyle(color: AppColors.destructive));
+    final message = Text(text, style: const TextStyle(color: AppColors.destructive));
+    if (failure != AuthFailure.unknown || detail == null) return message;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [message, ErrorDetails(detail!)],
+    );
   }
 }
 

@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:rentlog/core/bloc/load_state.dart';
+import 'package:rentlog/core/log.dart';
 import 'package:rentlog/features/landlord/data/landlord_models.dart';
 import 'package:rentlog/features/landlord/data/landlord_repository.dart';
 
@@ -163,7 +164,8 @@ class LeaseDetailBloc extends Bloc<LeaseDetailEvent, LeaseDetailState> {
         year: state.year,
       );
       emit(state.copyWith(data: LoadState.success(year)));
-    } on Object catch (error) {
+    } on Object catch (error, stack) {
+      logError('Loading lease year', error, stack);
       emit(
         state.copyWith(
           data: refreshing && previous != null
@@ -193,7 +195,8 @@ class LeaseDetailBloc extends Bloc<LeaseDetailEvent, LeaseDetailState> {
           signal: notice == null ? state.signal : state.signal + 1,
         ),
       );
-    } on Object catch (error) {
+    } on Object catch (error, stack) {
+      logError('Lease action', error, stack);
       emit(
         state.copyWith(busyMonth: null, error: error, signal: state.signal + 1),
       );

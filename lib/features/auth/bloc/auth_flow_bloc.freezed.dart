@@ -505,7 +505,8 @@ String toString() {
 /// @nodoc
 mixin _$AuthFlowState {
 
- AuthStep get step; String get email; bool get busy; PendingVerification? get pending; AuthFailure? get failure; bool get codeResent;/// Set once the code is accepted; the screen hands it to the session.
+ AuthStep get step; String get email; bool get busy; PendingVerification? get pending; AuthFailure? get failure;/// Clerk's own words for [failure], shown under "Show details".
+ String? get failureDetail; bool get codeResent;/// Set once the code is accepted; the screen hands it to the session.
  AuthUser? get user;
 /// Create a copy of AuthFlowState
 /// with the given fields replaced by the non-null parameter values.
@@ -518,20 +519,20 @@ $AuthFlowStateCopyWith<AuthFlowState> get copyWith => _$AuthFlowStateCopyWithImp
 @override
 bool operator ==(Object other) {
   final _this = this as AuthFlowState;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthFlowState&&(identical(other.step, _this.step) || other.step == _this.step)&&(identical(other.email, _this.email) || other.email == _this.email)&&(identical(other.busy, _this.busy) || other.busy == _this.busy)&&(identical(other.pending, _this.pending) || other.pending == _this.pending)&&(identical(other.failure, _this.failure) || other.failure == _this.failure)&&(identical(other.codeResent, _this.codeResent) || other.codeResent == _this.codeResent)&&(identical(other.user, _this.user) || other.user == _this.user));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthFlowState&&(identical(other.step, _this.step) || other.step == _this.step)&&(identical(other.email, _this.email) || other.email == _this.email)&&(identical(other.busy, _this.busy) || other.busy == _this.busy)&&(identical(other.pending, _this.pending) || other.pending == _this.pending)&&(identical(other.failure, _this.failure) || other.failure == _this.failure)&&(identical(other.failureDetail, _this.failureDetail) || other.failureDetail == _this.failureDetail)&&(identical(other.codeResent, _this.codeResent) || other.codeResent == _this.codeResent)&&(identical(other.user, _this.user) || other.user == _this.user));
 }
 
 
 @override
 int get hashCode {
   final _this = this as AuthFlowState;
-  return Object.hash(runtimeType,_this.step,_this.email,_this.busy,_this.pending,_this.failure,_this.codeResent,_this.user);
+  return Object.hash(runtimeType,_this.step,_this.email,_this.busy,_this.pending,_this.failure,_this.failureDetail,_this.codeResent,_this.user);
 }
 
 @override
 String toString() {
   final _this = this as AuthFlowState;
-  return 'AuthFlowState(step: ${_this.step}, email: ${_this.email}, busy: ${_this.busy}, pending: ${_this.pending}, failure: ${_this.failure}, codeResent: ${_this.codeResent}, user: ${_this.user})';
+  return 'AuthFlowState(step: ${_this.step}, email: ${_this.email}, busy: ${_this.busy}, pending: ${_this.pending}, failure: ${_this.failure}, failureDetail: ${_this.failureDetail}, codeResent: ${_this.codeResent}, user: ${_this.user})';
 }
 
 
@@ -542,7 +543,7 @@ abstract mixin class $AuthFlowStateCopyWith<$Res>  {
   factory $AuthFlowStateCopyWith(AuthFlowState value, $Res Function(AuthFlowState) _then) = _$AuthFlowStateCopyWithImpl;
 @useResult
 $Res call({
- AuthStep step, String email, bool busy, PendingVerification? pending, AuthFailure? failure, bool codeResent, AuthUser? user
+ AuthStep step, String email, bool busy, PendingVerification? pending, AuthFailure? failure, String? failureDetail, bool codeResent, AuthUser? user
 });
 
 
@@ -559,14 +560,15 @@ class _$AuthFlowStateCopyWithImpl<$Res>
 
 /// Create a copy of AuthFlowState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? step = null,Object? email = null,Object? busy = null,Object? pending = freezed,Object? failure = freezed,Object? codeResent = null,Object? user = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? step = null,Object? email = null,Object? busy = null,Object? pending = freezed,Object? failure = freezed,Object? failureDetail = freezed,Object? codeResent = null,Object? user = freezed,}) {
   return _then(AuthFlowState(
 step: null == step ? _self.step : step // ignore: cast_nullable_to_non_nullable
 as AuthStep,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,busy: null == busy ? _self.busy : busy // ignore: cast_nullable_to_non_nullable
 as bool,pending: freezed == pending ? _self.pending : pending // ignore: cast_nullable_to_non_nullable
 as PendingVerification?,failure: freezed == failure ? _self.failure : failure // ignore: cast_nullable_to_non_nullable
-as AuthFailure?,codeResent: null == codeResent ? _self.codeResent : codeResent // ignore: cast_nullable_to_non_nullable
+as AuthFailure?,failureDetail: freezed == failureDetail ? _self.failureDetail : failureDetail // ignore: cast_nullable_to_non_nullable
+as String?,codeResent: null == codeResent ? _self.codeResent : codeResent // ignore: cast_nullable_to_non_nullable
 as bool,user: freezed == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as AuthUser?,
   ));
@@ -677,10 +679,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( AuthStep step,  String email,  bool busy,  PendingVerification? pending,  AuthFailure? failure,  bool codeResent,  AuthUser? user)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( AuthStep step,  String email,  bool busy,  PendingVerification? pending,  AuthFailure? failure,  String? failureDetail,  bool codeResent,  AuthUser? user)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AuthFlowState() when $default != null:
-return $default(_that.step,_that.email,_that.busy,_that.pending,_that.failure,_that.codeResent,_that.user);case _:
+return $default(_that.step,_that.email,_that.busy,_that.pending,_that.failure,_that.failureDetail,_that.codeResent,_that.user);case _:
   return orElse();
 
 }
@@ -698,10 +700,10 @@ return $default(_that.step,_that.email,_that.busy,_that.pending,_that.failure,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( AuthStep step,  String email,  bool busy,  PendingVerification? pending,  AuthFailure? failure,  bool codeResent,  AuthUser? user)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( AuthStep step,  String email,  bool busy,  PendingVerification? pending,  AuthFailure? failure,  String? failureDetail,  bool codeResent,  AuthUser? user)  $default,) {final _that = this;
 switch (_that) {
 case _AuthFlowState():
-return $default(_that.step,_that.email,_that.busy,_that.pending,_that.failure,_that.codeResent,_that.user);case _:
+return $default(_that.step,_that.email,_that.busy,_that.pending,_that.failure,_that.failureDetail,_that.codeResent,_that.user);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -718,10 +720,10 @@ return $default(_that.step,_that.email,_that.busy,_that.pending,_that.failure,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( AuthStep step,  String email,  bool busy,  PendingVerification? pending,  AuthFailure? failure,  bool codeResent,  AuthUser? user)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( AuthStep step,  String email,  bool busy,  PendingVerification? pending,  AuthFailure? failure,  String? failureDetail,  bool codeResent,  AuthUser? user)?  $default,) {final _that = this;
 switch (_that) {
 case _AuthFlowState() when $default != null:
-return $default(_that.step,_that.email,_that.busy,_that.pending,_that.failure,_that.codeResent,_that.user);case _:
+return $default(_that.step,_that.email,_that.busy,_that.pending,_that.failure,_that.failureDetail,_that.codeResent,_that.user);case _:
   return null;
 
 }
@@ -733,7 +735,7 @@ return $default(_that.step,_that.email,_that.busy,_that.pending,_that.failure,_t
 
 
 class _AuthFlowState implements AuthFlowState {
-  const _AuthFlowState({this.step = AuthStep.email, this.email = '', this.busy = false, this.pending, this.failure, this.codeResent = false, this.user});
+  const _AuthFlowState({this.step = AuthStep.email, this.email = '', this.busy = false, this.pending, this.failure, this.failureDetail, this.codeResent = false, this.user});
   
 
 @override@JsonKey() final  AuthStep step;
@@ -741,6 +743,8 @@ class _AuthFlowState implements AuthFlowState {
 @override@JsonKey() final  bool busy;
 @override final  PendingVerification? pending;
 @override final  AuthFailure? failure;
+/// Clerk's own words for [failure], shown under "Show details".
+@override final  String? failureDetail;
 @override@JsonKey() final  bool codeResent;
 /// Set once the code is accepted; the screen hands it to the session.
 @override final  AuthUser? user;
@@ -755,18 +759,18 @@ _$AuthFlowStateCopyWith<_AuthFlowState> get copyWith => __$AuthFlowStateCopyWith
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthFlowState&&(identical(other.step, step) || other.step == step)&&(identical(other.email, email) || other.email == email)&&(identical(other.busy, busy) || other.busy == busy)&&(identical(other.pending, pending) || other.pending == pending)&&(identical(other.failure, failure) || other.failure == failure)&&(identical(other.codeResent, codeResent) || other.codeResent == codeResent)&&(identical(other.user, user) || other.user == user));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthFlowState&&(identical(other.step, step) || other.step == step)&&(identical(other.email, email) || other.email == email)&&(identical(other.busy, busy) || other.busy == busy)&&(identical(other.pending, pending) || other.pending == pending)&&(identical(other.failure, failure) || other.failure == failure)&&(identical(other.failureDetail, failureDetail) || other.failureDetail == failureDetail)&&(identical(other.codeResent, codeResent) || other.codeResent == codeResent)&&(identical(other.user, user) || other.user == user));
 }
 
 
 @override
 int get hashCode {
-    return Object.hash(runtimeType,step,email,busy,pending,failure,codeResent,user);
+    return Object.hash(runtimeType,step,email,busy,pending,failure,failureDetail,codeResent,user);
 }
 
 @override
 String toString() {
-    return 'AuthFlowState(step: $step, email: $email, busy: $busy, pending: $pending, failure: $failure, codeResent: $codeResent, user: $user)';
+    return 'AuthFlowState(step: $step, email: $email, busy: $busy, pending: $pending, failure: $failure, failureDetail: $failureDetail, codeResent: $codeResent, user: $user)';
 }
 
 
@@ -777,7 +781,7 @@ abstract mixin class _$AuthFlowStateCopyWith<$Res> implements $AuthFlowStateCopy
   factory _$AuthFlowStateCopyWith(_AuthFlowState value, $Res Function(_AuthFlowState) _then) = __$AuthFlowStateCopyWithImpl;
 @override @useResult
 $Res call({
- AuthStep step, String email, bool busy, PendingVerification? pending, AuthFailure? failure, bool codeResent, AuthUser? user
+ AuthStep step, String email, bool busy, PendingVerification? pending, AuthFailure? failure, String? failureDetail, bool codeResent, AuthUser? user
 });
 
 
@@ -794,14 +798,15 @@ class __$AuthFlowStateCopyWithImpl<$Res>
 
 /// Create a copy of AuthFlowState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? step = null,Object? email = null,Object? busy = null,Object? pending = freezed,Object? failure = freezed,Object? codeResent = null,Object? user = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? step = null,Object? email = null,Object? busy = null,Object? pending = freezed,Object? failure = freezed,Object? failureDetail = freezed,Object? codeResent = null,Object? user = freezed,}) {
   return _then(_AuthFlowState(
 step: null == step ? _self.step : step // ignore: cast_nullable_to_non_nullable
 as AuthStep,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,busy: null == busy ? _self.busy : busy // ignore: cast_nullable_to_non_nullable
 as bool,pending: freezed == pending ? _self.pending : pending // ignore: cast_nullable_to_non_nullable
 as PendingVerification?,failure: freezed == failure ? _self.failure : failure // ignore: cast_nullable_to_non_nullable
-as AuthFailure?,codeResent: null == codeResent ? _self.codeResent : codeResent // ignore: cast_nullable_to_non_nullable
+as AuthFailure?,failureDetail: freezed == failureDetail ? _self.failureDetail : failureDetail // ignore: cast_nullable_to_non_nullable
+as String?,codeResent: null == codeResent ? _self.codeResent : codeResent // ignore: cast_nullable_to_non_nullable
 as bool,user: freezed == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as AuthUser?,
   ));

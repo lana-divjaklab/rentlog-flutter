@@ -316,5 +316,7 @@
   },
   "notificationChannelName": "Charges and reminders",
   "notificationChannelDescription": "New costs to pay and rent reminders.",
-  "defaultOrganizationName": "My rentals"
+  "defaultOrganizationName": "My rentals",
+  "showDetails": "Show details",
+  "hideDetails": "Hide details"
 }

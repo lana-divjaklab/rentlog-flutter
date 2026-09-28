@@ -4,7 +4,7 @@ import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rentlog/core/config/env.dart';
 
@@ -49,6 +49,11 @@ class PushService {
   bool _available = false;
   String? _token;
   StreamSubscription<String>? _refreshSub;
+
+  /// Set while signed in, so a registration that couldn't finish (no APNs
+  /// token yet) is retried when the app comes back to the foreground.
+  PushTokenSink? _sink;
+  AppLifecycleListener? _lifecycle;
 
   final _opened = StreamController<PushMessage>.broadcast();
   final _received = StreamController<PushMessage>.broadcast();
@@ -139,20 +144,30 @@ class PushService {
   /// token to [sink], again whenever FCM rotates it.
   Future<void> register(PushTokenSink sink) async {
     if (!_available) return;
+    _sink = sink;
+    _lifecycle ??= AppLifecycleListener(
+      onResume: () {
+        final pending = _sink;
+        if (pending != null && _token == null) unawaited(register(pending));
+      },
+    );
+
     final messaging = FirebaseMessaging.instance;
     final settings = await messaging.requestPermission();
     if (settings.authorizationStatus == AuthorizationStatus.denied) return;
 
     try {
-      if (Platform.isIOS && await messaging.getAPNSToken() == null) {
-        // The Simulator without push, or APNs not ready yet: FCM would throw.
-        debugPrint('Push: no APNs token yet, skipping registration.');
+      // iOS delivers the APNs token a moment after permission is granted,
+      // and FCM can't issue its own token before that. Wait for it rather
+      // than giving up on the first try.
+      if (Platform.isIOS && !await _waitForApnsToken(messaging)) {
+        debugPrint('Push: no APNs token yet; will retry on next resume.');
         return;
       }
       final token = await messaging.getToken();
       if (token == null) return;
-      _token = token;
       await sink.register(token: token, platform: _platform);
+      _token = token;
     } on Object catch (error) {
       debugPrint('Push registration failed: $error');
       return;
@@ -169,6 +184,7 @@ class PushService {
   /// the previous one.
   Future<void> unregister(PushTokenSink sink) async {
     if (!_available) return;
+    _sink = null;
     await _refreshSub?.cancel();
     _refreshSub = null;
     final token = _token;
@@ -211,6 +227,14 @@ class PushService {
       ),
       payload: jsonEncode(push.toData()),
     );
+  }
+
+  static Future<bool> _waitForApnsToken(FirebaseMessaging messaging) async {
+    for (var attempt = 0; attempt < 20; attempt++) {
+      if (await messaging.getAPNSToken() != null) return true;
+      await Future<void>.delayed(const Duration(milliseconds: 500));
+    }
+    return false;
   }
 
   static String get _platform => Platform.isIOS ? 'ios' : 'android';

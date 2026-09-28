@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:rentlog/core/auth/clerk_api.dart';
 import 'package:rentlog/core/convex/convex_client.dart';
+import 'package:rentlog/core/log.dart';
 import 'package:rentlog/features/auth/data/auth_models.dart';
 
 /// Why a sign-in or sign-up step failed, in terms the UI can word.
@@ -67,7 +68,9 @@ class AuthRepository implements ConvexTokenProvider {
       final emailAddressId = attempt.emailAddressId;
       if (emailAddressId == null) {
         // The account exists but email codes aren't offered for it.
-        throw const AuthException(AuthFailure.unknown);
+        final why = 'no email_code factor offered (status ${attempt.status})';
+        logError('Sign-in', why);
+        throw AuthException(AuthFailure.unknown, why);
       }
       await _clerk.prepareSignInEmailCode(
         signInId: attempt.id,
@@ -138,17 +141,24 @@ class AuthRepository implements ConvexTokenProvider {
       if (!attempt.isComplete) {
         // Clerk wants something the app doesn't collect (e.g. a new
         // required field added in the dashboard).
-        throw AuthException(
-          AuthFailure.unknown,
-          attempt.missingFields.isEmpty
-              ? null
-              : 'Missing: ${attempt.missingFields.join(', ')}',
-        );
+        final why =
+            'status ${attempt.status}, session ${attempt.createdSessionId}, missing ${attempt.missingFields}';
+        logError('Code verification', why);
+        throw AuthException(AuthFailure.unknown, why);
       }
       final session = await _clerk.activeSession();
-      if (session == null) throw const AuthException(AuthFailure.unknown);
+      if (session == null) {
+        const why = 'completed but Clerk returned no active session';
+        logError('Code verification', why);
+        throw const AuthException(AuthFailure.unknown, why);
+      }
+      // Signed in only counts once Convex can be reached with it: fetch the
+      // Convex token now, so a Clerk problem shows up here, on the code
+      // screen, rather than as a failure on every screen after it.
+      final jwt = await _clerk.sessionToken(session.id);
       _sessionId = session.id;
-      _token = null;
+      _token = jwt;
+      _tokenExpiry = _expiryOf(jwt);
       return _userFrom(session.user);
     } on ClerkApiException catch (e) {
       throw _map(e);
@@ -187,14 +197,25 @@ class AuthRepository implements ConvexTokenProvider {
       _tokenExpiry = _expiryOf(jwt);
       return jwt;
     } on ClerkApiException catch (e) {
-      if (e.isNetwork) rethrow;
-      // Clerk no longer knows this session.
-      _sessionId = null;
+      // Never carry on without a token: Convex would run the call as a
+      // stranger and fail with a meaningless "not authenticated".
       _token = null;
-      _signedOut.add(null);
-      return null;
+      logError('Clerk session token (${e.code})', e.message);
+      if (_sessionGone(e)) {
+        _sessionId = null;
+        _signedOut.add(null);
+      }
+      rethrow;
     }
   }
+
+  /// Clerk answers this way when the session was ended or expired — on
+  /// another device, by an admin, or by time.
+  static bool _sessionGone(ClerkApiException e) =>
+      e.code == 'resource_not_found' ||
+      e.code == 'authentication_invalid' ||
+      e.code == 'http_401' ||
+      e.code == 'http_404';
 
   static DateTime? _expiryOf(String jwt) {
     final parts = jwt.split('.');
@@ -220,7 +241,9 @@ class AuthRepository implements ConvexTokenProvider {
   );
 
   static AuthException _map(ClerkApiException e) {
-    if (e.isNetwork) return AuthException(AuthFailure.network, e.message);
+    logError('Clerk ${e.code}', e.message);
+    final detail = '${e.code}: ${e.message}';
+    if (e.isNetwork) return AuthException(AuthFailure.network, detail);
     final failure = switch (e.code) {
       'form_identifier_not_found' => AuthFailure.noAccount,
       'form_param_format_invalid' || 'form_param_nil' => AuthFailure.invalidEmail,
@@ -233,6 +256,6 @@ class AuthRepository implements ConvexTokenProvider {
       final code when code.startsWith('captcha') => AuthFailure.signUpBlocked,
       _ => AuthFailure.unknown,
     };
-    return AuthException(failure, e.message);
+    return AuthException(failure, detail);
   }
 }
