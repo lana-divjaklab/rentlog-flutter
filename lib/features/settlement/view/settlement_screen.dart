@@ -30,13 +30,15 @@ class SettlementScreen extends StatelessWidget {
         settlement: context.read<SettlementRepository>(),
         organizationId: session.landlordOrg!.organizationId,
       )..add(const SettlementEvent.started()),
-      child: const _SettlementView(),
+      child: const SettlementView(),
     );
   }
 }
 
-class _SettlementView extends StatelessWidget {
-  const _SettlementView();
+/// The screen body, given a SettlementBloc above it. Public so tests and the
+/// store-screenshot tool can drive it with their own bloc.
+class SettlementView extends StatelessWidget {
+  const SettlementView({super.key});
 
   @override
   Widget build(BuildContext context) {

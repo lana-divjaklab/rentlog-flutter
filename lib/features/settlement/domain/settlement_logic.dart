@@ -112,6 +112,15 @@ class BillCategory {
   bool get splitsByUsage =>
       rows.values.any((r) => r.allocationType == AllocationType.consumption);
 
+  /// Fixed and manual costs don't depend on the bill, so a category billed
+  /// only that way has nothing to enter.
+  bool get needsBill => rows.values.any(
+    (r) =>
+        r.allocationType == AllocationType.consumption ||
+        r.allocationType == AllocationType.percentage ||
+        r.allocationType == AllocationType.billMinusFixed,
+  );
+
   bool get entered => (totalBillCents ?? 0) > 0;
 }
 
@@ -149,8 +158,9 @@ StepStatus metersStatus(SettlementMonth data) {
   return _status(filled, total);
 }
 
+/// Only bills that feed a calculation count.
 StepStatus billsStatus(SettlementMonth data) {
-  final categories = data.billCategories;
+  final categories = data.billCategories.where((c) => c.needsBill).toList();
   return _status(categories.where((c) => c.entered).length, categories.length);
 }
 

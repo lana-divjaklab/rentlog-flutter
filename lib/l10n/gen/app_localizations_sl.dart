@@ -621,4 +621,7 @@ class AppLocalizationsSl extends AppLocalizations {
 
   @override
   String get chooseProperty => 'Izberi nepremičnino';
+
+  @override
+  String get noBillsNeeded => 'Ni česa za vnos: stroški te nepremičnine so vsi fiksni zneski.';
 }

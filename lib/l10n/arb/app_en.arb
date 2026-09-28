@@ -374,5 +374,6 @@
       }
     }
   },
-  "chooseProperty": "Choose a property"
+  "chooseProperty": "Choose a property",
+  "noBillsNeeded": "Nothing to enter: this property's costs are all fixed amounts."
 }

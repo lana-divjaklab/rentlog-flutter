@@ -179,5 +179,6 @@
   "calculating": "Računam …",
   "publishedToTenants": "{count, plural, =0{Ni česa novega za objavo.} =1{Objavljeno. Obveščen je 1 najemnik.} =2{Objavljeno. Obveščena sta 2 najemnika.} few{Objavljeno. Obveščeni so {count} najemniki.} other{Objavljeno. Obveščenih je {count} najemnikov.}}",
   "allPublished": "Vse za {month} je objavljeno.",
-  "chooseProperty": "Izberi nepremičnino"
+  "chooseProperty": "Izberi nepremičnino",
+  "noBillsNeeded": "Ni česa za vnos: stroški te nepremičnine so vsi fiksni zneski."
 }

@@ -128,6 +128,22 @@ void main() {
     });
   });
 
+  test('fixed and manual costs need no bill', () {
+    final data = settlement(
+      leaseMonths: {
+        'leaseA': leaseMonth([
+          row(categoryId: 'water', type: AllocationType.consumption, usesMeter: true, totalBillCents: 5670),
+          row(categoryId: 'heat', type: AllocationType.fixed, amountCents: 4500),
+          row(categoryId: 'garage', type: AllocationType.manual, amountCents: 2500),
+        ]),
+        'leaseB': null,
+      },
+    );
+    final needed = data.billCategories.where((c) => c.needsBill);
+    expect(needed.map((c) => c.categoryId), ['water']);
+    expect(billsStatus(data), StepStatus.done);
+  });
+
   test('bill categories merge every lease, and know when usage is needed', () {
     final data = settlement(
       leaseMonths: {

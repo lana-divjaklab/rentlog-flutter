@@ -18,11 +18,12 @@ class BillsStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final categories = data.billCategories;
+    final all = data.billCategories;
+    final categories = all.where((c) => c.needsBill).toList();
     if (categories.isEmpty) {
       return EmptyState(
         icon: Icons.receipt_long_outlined,
-        message: context.l10n.noCostsToEnter,
+        message: all.isEmpty ? context.l10n.noCostsToEnter : context.l10n.noBillsNeeded,
       );
     }
     return ListView(

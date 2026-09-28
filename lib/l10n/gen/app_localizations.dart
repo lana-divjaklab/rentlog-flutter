@@ -1176,6 +1176,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Choose a property'**
   String get chooseProperty;
+
+  /// No description provided for @noBillsNeeded.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to enter: this property\'s costs are all fixed amounts.'**
+  String get noBillsNeeded;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

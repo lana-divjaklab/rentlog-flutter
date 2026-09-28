@@ -617,4 +617,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chooseProperty => 'Choose a property';
+
+  @override
+  String get noBillsNeeded => 'Nothing to enter: this property\'s costs are all fixed amounts.';
 }
