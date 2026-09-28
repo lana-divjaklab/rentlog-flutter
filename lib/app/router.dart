@@ -10,10 +10,10 @@ import 'package:rentlog/features/auth/view/auth_screen.dart';
 import 'package:rentlog/features/landlord/view/landlord_overview_screen.dart';
 import 'package:rentlog/features/landlord/view/lease_detail_screen.dart';
 import 'package:rentlog/features/landlord/view/leases_screen.dart';
-import 'package:rentlog/features/landlord/view/properties_screen.dart';
 import 'package:rentlog/features/onboarding/view/onboarding_screen.dart';
 import 'package:rentlog/features/session/bloc/session_bloc.dart';
 import 'package:rentlog/features/settings/view/settings_screen.dart';
+import 'package:rentlog/features/settlement/view/settlement_screen.dart';
 import 'package:rentlog/features/tenant/view/tenant_documents_screen.dart';
 import 'package:rentlog/features/tenant/view/tenant_home_screen.dart';
 
@@ -100,8 +100,8 @@ GoRouter buildRouter(SessionBloc session) => GoRouter(
         StatefulShellBranch(
           routes: [
             GoRoute(
-              path: AppRoutes.landlordProperties,
-              builder: (_, _) => const PropertiesScreen(),
+              path: AppRoutes.landlordMonth,
+              builder: (_, _) => const SettlementScreen(),
             ),
           ],
         ),

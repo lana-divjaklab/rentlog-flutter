@@ -75,6 +75,26 @@ void main() {
     });
   });
 
+  test('strips nulls inside nested lists and maps too', () async {
+    // Convex rejects `manualAmountCents: null` inside an entries list with
+    // an ArgumentValidationError; optional fields must be absent.
+    final adapter = _FakeAdapter([
+      (200, {'status': 'success', 'value': null}),
+    ]);
+    await _client(adapter, _Tokens()).mutation('utilities:generateForLeaseMonth', {
+      'entries': [
+        {'categoryId': 'c1', 'tenantUsage': null, 'manualAmountCents': null},
+        {'categoryId': 'c2', 'tenantUsage': 4.5},
+      ],
+    });
+    expect(adapter.bodies.single['args'], {
+      'entries': [
+        {'categoryId': 'c1'},
+        {'categoryId': 'c2', 'tenantUsage': 4.5},
+      ],
+    });
+  });
+
   test('retries once with a fresh token after a 401', () async {
     final adapter = _FakeAdapter([
       (401, {'code': 'Unauthenticated'}),

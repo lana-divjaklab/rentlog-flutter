@@ -123,24 +123,14 @@ class _SettingsView extends StatelessWidget {
               ),
             ),
           ),
-          if (state.notificationsOn != null) ...[
+          if (state.notifications != null &&
+              state.notifications != PushStatus.unavailable) ...[
             _SectionTitle(l10n.settingsNotifications),
             RlCard(
-              child: Row(
-                children: [
-                  Icon(
-                    state.notificationsOn!
-                        ? Icons.notifications_active_outlined
-                        : Icons.notifications_off_outlined,
-                    color: state.notificationsOn! ? AppColors.primary : AppColors.muted,
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      state.notificationsOn! ? l10n.notificationsOn : l10n.notificationsOff,
-                    ),
-                  ),
-                ],
+              padding: EdgeInsets.zero,
+              child: _NotificationsSwitch(
+                status: state.notifications!,
+                busy: state.notificationsBusy,
               ),
             ),
           ],
@@ -222,6 +212,66 @@ class _SettingsView extends StatelessWidget {
       ),
     );
     if (confirmed ?? false) bloc.add(const SettingsEvent.deletionRequested());
+  }
+}
+
+class _NotificationsSwitch extends StatefulWidget {
+  const _NotificationsSwitch({required this.status, required this.busy});
+
+  final PushStatus status;
+  final bool busy;
+
+  @override
+  State<_NotificationsSwitch> createState() => _NotificationsSwitchState();
+}
+
+class _NotificationsSwitchState extends State<_NotificationsSwitch> {
+  late final AppLifecycleListener _lifecycle;
+
+  @override
+  void initState() {
+    super.initState();
+    // Permission may have changed while the user was in the phone's settings.
+    _lifecycle = AppLifecycleListener(
+      onResume: () => context.read<SettingsBloc>().add(
+        const SettingsEvent.notificationsRechecked(),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _lifecycle.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final on = widget.status == PushStatus.on;
+    final blocked = widget.status == PushStatus.blockedBySystem;
+    return SwitchListTile(
+      value: on,
+      activeThumbColor: AppColors.primary,
+      secondary: Icon(
+        on ? Icons.notifications_active_outlined : Icons.notifications_off_outlined,
+        color: on ? AppColors.primary : AppColors.muted,
+      ),
+      title: Text(l10n.notificationsSwitch),
+      subtitle: Text(
+        blocked
+            ? l10n.notificationsBlockedHint
+            : on
+            ? l10n.notificationsOnHint
+            : l10n.notificationsOffHint,
+        style: TextStyle(color: blocked ? AppColors.warning : AppColors.muted),
+      ),
+      onChanged: widget.busy
+          ? null
+          : (enabled) => context.read<SettingsBloc>().add(
+              SettingsEvent.notificationsToggled(enabled: enabled),
+            ),
+    );
   }
 }
 

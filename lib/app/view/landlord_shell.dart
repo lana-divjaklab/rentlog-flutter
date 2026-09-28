@@ -33,11 +33,6 @@ class LandlordShell extends StatelessWidget {
               LoaderBloc<List<LeaseSummary>>(() => repo.leases(orgId))
                 ..add(const LoaderEvent.started()),
         ),
-        BlocProvider(
-          create: (_) =>
-              LoaderBloc<List<PropertyItem>>(() => repo.properties(orgId))
-                ..add(const LoaderEvent.started()),
-        ),
       ],
       child: Builder(
         builder: (context) => RefreshOnSignal(
@@ -65,9 +60,9 @@ class LandlordShell extends StatelessWidget {
                   label: l10n.navLeases,
                 ),
                 NavigationDestination(
-                  icon: const Icon(Icons.home_work_outlined),
-                  selectedIcon: const Icon(Icons.home_work),
-                  label: l10n.navProperties,
+                  icon: const Icon(Icons.receipt_long_outlined),
+                  selectedIcon: const Icon(Icons.receipt_long),
+                  label: l10n.navMonth,
                 ),
                 NavigationDestination(
                   icon: const Icon(Icons.settings_outlined),

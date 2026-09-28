@@ -76,7 +76,6 @@
   "navSettings": "Settings",
   "navOverview": "Overview",
   "navLeases": "Leases",
-  "navProperties": "Properties",
   "monthlyRent": "Monthly rent",
   "deposit": "Deposit",
   "history": "History",
@@ -202,15 +201,6 @@
     }
   },
   "propertiesEmpty": "No properties yet. Add them in the web app.",
-  "unitsCount": "{count, plural, =0{No units} =1{1 unit} other{{count} units}}",
-  "@unitsCount": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "ownerOccupied": "Owner-occupied",
   "markPaid": "Mark paid",
   "pay": "Pay",
   "paidAmountLabel": "Paid",
@@ -252,8 +242,10 @@
   "settingsLanguage": "Language",
   "languageSystem": "Phone default",
   "settingsNotifications": "Notifications",
-  "notificationsOn": "On",
-  "notificationsOff": "Off. Turn them on in your phone's settings.",
+  "notificationsSwitch": "Push notifications",
+  "notificationsOnHint": "New costs to pay and rent reminders.",
+  "notificationsOffHint": "Off on this phone.",
+  "notificationsBlockedHint": "Blocked in your phone's settings. Tap to allow.",
   "settingsSubscription": "Subscription",
   "planFree": "Free",
   "planPro": "Pro",
@@ -318,5 +310,69 @@
   "notificationChannelDescription": "New costs to pay and rent reminders.",
   "defaultOrganizationName": "My rentals",
   "showDetails": "Show details",
-  "hideDetails": "Hide details"
+  "hideDetails": "Hide details",
+  "navMonth": "Month",
+  "stepMeters": "Meters",
+  "stepBills": "Bills",
+  "stepReview": "Review",
+  "mainMeter": "Main meter",
+  "previousReadingValue": "Previous: {value}",
+  "@previousReadingValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "missingPreviousReading": "No reading for {month} yet, so usage can't be calculated.",
+  "@missingPreviousReading": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "openMonth": "Open {month}",
+  "@openMonth": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "noMeteredUtilities": "This property has no metered utilities.",
+  "totalBill": "Total bill",
+  "totalUsage": "Total usage",
+  "usageFromMeters": "Usage from meters: {usage}",
+  "@usageFromMeters": {
+    "placeholders": {
+      "usage": {
+        "type": "String"
+      }
+    }
+  },
+  "usageFromMetersMissing": "Usage appears once both meter readings are in.",
+  "noCostsToEnter": "No cost rules on this property's leases yet. Add them in the web app.",
+  "noActiveLeasesOnProperty": "This property has no active leases.",
+  "monthNotInLease": "This month isn't part of the lease.",
+  "draft": "Draft",
+  "next": "Continue",
+  "calculating": "Calculating…",
+  "publishedToTenants": "{count, plural, =0{Nothing new to publish.} =1{Published. 1 tenant was notified.} other{Published. {count} tenants were notified.}}",
+  "@publishedToTenants": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "allPublished": "Everything for {month} is published.",
+  "@allPublished": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "chooseProperty": "Choose a property"
 }

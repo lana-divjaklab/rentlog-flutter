@@ -15,6 +15,7 @@ import 'package:rentlog/features/auth/data/auth_repository.dart';
 import 'package:rentlog/features/landlord/data/landlord_repository.dart';
 import 'package:rentlog/features/session/bloc/session_bloc.dart';
 import 'package:rentlog/features/session/data/session_repository.dart';
+import 'package:rentlog/features/settlement/data/settlement_repository.dart';
 import 'package:rentlog/features/tenant/data/tenant_repository.dart';
 import 'package:rentlog/l10n/l10n.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -35,7 +36,7 @@ Future<void> bootstrap() async {
   final convex = ConvexClient(deploymentUrl: Env.convexUrl, tokens: auth);
   final session = SessionRepository(convex);
 
-  final push = PushService();
+  final push = PushService(prefs: prefs);
   final strings = lookupAppLocalizations(Locale(localeCubit.languageCode));
   await push.initialize(
     channelName: strings.notificationChannelName,
@@ -57,6 +58,7 @@ Future<void> bootstrap() async {
         session: session,
         tenant: TenantRepository(convex),
         landlord: LandlordRepository(convex),
+        settlement: SettlementRepository(convex),
         push: push,
         localeCubit: localeCubit,
         sessionBloc: sessionBloc,

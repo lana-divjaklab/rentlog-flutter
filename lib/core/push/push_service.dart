@@ -2,11 +2,13 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:app_settings/app_settings.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rentlog/core/config/env.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// What a notification is about; the `data` payload built in
 /// convex/pushActions.ts.
@@ -30,6 +32,22 @@ class PushMessage {
   };
 }
 
+/// Whether this phone gets notifications, as the Settings switch shows it.
+enum PushStatus {
+  /// Push isn't configured in this build.
+  unavailable,
+
+  /// Switched on, and allowed by the phone.
+  on,
+
+  /// Switched off in the app.
+  off,
+
+  /// Wanted, but notifications for RentLOG are off in the phone's settings;
+  /// only the user can change that there.
+  blockedBySystem,
+}
+
 /// Where a token is sent once one exists; implemented by the session layer.
 abstract interface class PushTokenSink {
   Future<void> register({required String token, required String platform});
@@ -41,10 +59,18 @@ abstract interface class PushTokenSink {
 /// Everything is a no-op until the Firebase values in `config/<flavor>.json`
 /// are filled in, so the app runs fine before push is set up.
 class PushService {
-  PushService({FlutterLocalNotificationsPlugin? local})
-    : _local = local ?? FlutterLocalNotificationsPlugin();
+  PushService({
+    required this._prefs,
+    FlutterLocalNotificationsPlugin? local,
+  }) : _local = local ?? FlutterLocalNotificationsPlugin();
 
+  final SharedPreferences _prefs;
   final FlutterLocalNotificationsPlugin _local;
+
+  static const _enabledKey = 'push_enabled';
+
+  /// The in-app switch. On unless the user turned it off on this phone.
+  bool get _enabledByUser => _prefs.getBool(_enabledKey) ?? true;
 
   bool _available = false;
   String? _token;
@@ -145,6 +171,7 @@ class PushService {
   Future<void> register(PushTokenSink sink) async {
     if (!_available) return;
     _sink = sink;
+    if (!_enabledByUser) return;
     _lifecycle ??= AppLifecycleListener(
       onResume: () {
         final pending = _sink;
@@ -199,12 +226,42 @@ class PushService {
     await FirebaseMessaging.instance.deleteToken();
   }
 
-  Future<bool> isPermitted() async {
-    if (!_available) return false;
+  Future<PushStatus> status() async {
+    if (!_available) return PushStatus.unavailable;
+    if (!_enabledByUser) return PushStatus.off;
     final settings = await FirebaseMessaging.instance.getNotificationSettings();
-    return settings.authorizationStatus == AuthorizationStatus.authorized ||
-        settings.authorizationStatus == AuthorizationStatus.provisional;
+    return switch (settings.authorizationStatus) {
+      AuthorizationStatus.authorized ||
+      AuthorizationStatus.provisional => PushStatus.on,
+      AuthorizationStatus.denied ||
+      AuthorizationStatus.deniedPermanently => PushStatus.blockedBySystem,
+      // Never asked: the switch reads on, and turning it on asks.
+      AuthorizationStatus.notDetermined => PushStatus.on,
+    };
   }
+
+  /// The Settings switch. Off unregisters this phone, so nothing is even
+  /// sent to it; on registers it again, asking the phone for permission if
+  /// it hasn't been asked yet.
+  Future<PushStatus> setEnabled({
+    required bool enabled,
+    required PushTokenSink sink,
+  }) async {
+    await _prefs.setBool(_enabledKey, enabled);
+    if (enabled) {
+      await register(sink);
+    } else {
+      await unregister(sink);
+      // Keep the sink so switching back on later can register again.
+      _sink = sink;
+    }
+    return await status();
+  }
+
+  /// RentLOG's notification page in the phone's settings — the only place a
+  /// user can undo "Don't Allow".
+  Future<void> openSystemSettings() =>
+      AppSettings.openAppSettings(type: AppSettingsType.notification);
 
   Future<void> _showLocal(
     RemoteMessage message,

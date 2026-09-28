@@ -469,12 +469,6 @@ abstract class AppLocalizations {
   /// **'Leases'**
   String get navLeases;
 
-  /// No description provided for @navProperties.
-  ///
-  /// In en, this message translates to:
-  /// **'Properties'**
-  String get navProperties;
-
   /// No description provided for @monthlyRent.
   ///
   /// In en, this message translates to:
@@ -721,18 +715,6 @@ abstract class AppLocalizations {
   /// **'No properties yet. Add them in the web app.'**
   String get propertiesEmpty;
 
-  /// No description provided for @unitsCount.
-  ///
-  /// In en, this message translates to:
-  /// **'{count, plural, =0{No units} =1{1 unit} other{{count} units}}'**
-  String unitsCount(int count);
-
-  /// No description provided for @ownerOccupied.
-  ///
-  /// In en, this message translates to:
-  /// **'Owner-occupied'**
-  String get ownerOccupied;
-
   /// No description provided for @markPaid.
   ///
   /// In en, this message translates to:
@@ -895,17 +877,29 @@ abstract class AppLocalizations {
   /// **'Notifications'**
   String get settingsNotifications;
 
-  /// No description provided for @notificationsOn.
+  /// No description provided for @notificationsSwitch.
   ///
   /// In en, this message translates to:
-  /// **'On'**
-  String get notificationsOn;
+  /// **'Push notifications'**
+  String get notificationsSwitch;
 
-  /// No description provided for @notificationsOff.
+  /// No description provided for @notificationsOnHint.
   ///
   /// In en, this message translates to:
-  /// **'Off. Turn them on in your phone\'s settings.'**
-  String get notificationsOff;
+  /// **'New costs to pay and rent reminders.'**
+  String get notificationsOnHint;
+
+  /// No description provided for @notificationsOffHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Off on this phone.'**
+  String get notificationsOffHint;
+
+  /// No description provided for @notificationsBlockedHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked in your phone\'s settings. Tap to allow.'**
+  String get notificationsBlockedHint;
 
   /// No description provided for @settingsSubscription.
   ///
@@ -1050,6 +1044,138 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Hide details'**
   String get hideDetails;
+
+  /// No description provided for @navMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
+  String get navMonth;
+
+  /// No description provided for @stepMeters.
+  ///
+  /// In en, this message translates to:
+  /// **'Meters'**
+  String get stepMeters;
+
+  /// No description provided for @stepBills.
+  ///
+  /// In en, this message translates to:
+  /// **'Bills'**
+  String get stepBills;
+
+  /// No description provided for @stepReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Review'**
+  String get stepReview;
+
+  /// No description provided for @mainMeter.
+  ///
+  /// In en, this message translates to:
+  /// **'Main meter'**
+  String get mainMeter;
+
+  /// No description provided for @previousReadingValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous: {value}'**
+  String previousReadingValue(String value);
+
+  /// No description provided for @missingPreviousReading.
+  ///
+  /// In en, this message translates to:
+  /// **'No reading for {month} yet, so usage can\'t be calculated.'**
+  String missingPreviousReading(String month);
+
+  /// No description provided for @openMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Open {month}'**
+  String openMonth(String month);
+
+  /// No description provided for @noMeteredUtilities.
+  ///
+  /// In en, this message translates to:
+  /// **'This property has no metered utilities.'**
+  String get noMeteredUtilities;
+
+  /// No description provided for @totalBill.
+  ///
+  /// In en, this message translates to:
+  /// **'Total bill'**
+  String get totalBill;
+
+  /// No description provided for @totalUsage.
+  ///
+  /// In en, this message translates to:
+  /// **'Total usage'**
+  String get totalUsage;
+
+  /// No description provided for @usageFromMeters.
+  ///
+  /// In en, this message translates to:
+  /// **'Usage from meters: {usage}'**
+  String usageFromMeters(String usage);
+
+  /// No description provided for @usageFromMetersMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'Usage appears once both meter readings are in.'**
+  String get usageFromMetersMissing;
+
+  /// No description provided for @noCostsToEnter.
+  ///
+  /// In en, this message translates to:
+  /// **'No cost rules on this property\'s leases yet. Add them in the web app.'**
+  String get noCostsToEnter;
+
+  /// No description provided for @noActiveLeasesOnProperty.
+  ///
+  /// In en, this message translates to:
+  /// **'This property has no active leases.'**
+  String get noActiveLeasesOnProperty;
+
+  /// No description provided for @monthNotInLease.
+  ///
+  /// In en, this message translates to:
+  /// **'This month isn\'t part of the lease.'**
+  String get monthNotInLease;
+
+  /// No description provided for @draft.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft'**
+  String get draft;
+
+  /// No description provided for @next.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get next;
+
+  /// No description provided for @calculating.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculating…'**
+  String get calculating;
+
+  /// No description provided for @publishedToTenants.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Nothing new to publish.} =1{Published. 1 tenant was notified.} other{Published. {count} tenants were notified.}}'**
+  String publishedToTenants(int count);
+
+  /// No description provided for @allPublished.
+  ///
+  /// In en, this message translates to:
+  /// **'Everything for {month} is published.'**
+  String allPublished(String month);
+
+  /// No description provided for @chooseProperty.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a property'**
+  String get chooseProperty;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

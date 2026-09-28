@@ -202,9 +202,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navLeases => 'Leases';
 
   @override
-  String get navProperties => 'Properties';
-
-  @override
   String get monthlyRent => 'Monthly rent';
 
   @override
@@ -358,21 +355,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get propertiesEmpty => 'No properties yet. Add them in the web app.';
 
   @override
-  String unitsCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count units',
-      one: '1 unit',
-      zero: 'No units',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get ownerOccupied => 'Owner-occupied';
-
-  @override
   String get markPaid => 'Mark paid';
 
   @override
@@ -458,10 +440,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsNotifications => 'Notifications';
 
   @override
-  String get notificationsOn => 'On';
+  String get notificationsSwitch => 'Push notifications';
 
   @override
-  String get notificationsOff => 'Off. Turn them on in your phone\'s settings.';
+  String get notificationsOnHint => 'New costs to pay and rent reminders.';
+
+  @override
+  String get notificationsOffHint => 'Off on this phone.';
+
+  @override
+  String get notificationsBlockedHint => 'Blocked in your phone\'s settings. Tap to allow.';
 
   @override
   String get settingsSubscription => 'Subscription';
@@ -544,4 +532,89 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get hideDetails => 'Hide details';
+
+  @override
+  String get navMonth => 'Month';
+
+  @override
+  String get stepMeters => 'Meters';
+
+  @override
+  String get stepBills => 'Bills';
+
+  @override
+  String get stepReview => 'Review';
+
+  @override
+  String get mainMeter => 'Main meter';
+
+  @override
+  String previousReadingValue(String value) {
+    return 'Previous: $value';
+  }
+
+  @override
+  String missingPreviousReading(String month) {
+    return 'No reading for $month yet, so usage can\'t be calculated.';
+  }
+
+  @override
+  String openMonth(String month) {
+    return 'Open $month';
+  }
+
+  @override
+  String get noMeteredUtilities => 'This property has no metered utilities.';
+
+  @override
+  String get totalBill => 'Total bill';
+
+  @override
+  String get totalUsage => 'Total usage';
+
+  @override
+  String usageFromMeters(String usage) {
+    return 'Usage from meters: $usage';
+  }
+
+  @override
+  String get usageFromMetersMissing => 'Usage appears once both meter readings are in.';
+
+  @override
+  String get noCostsToEnter => 'No cost rules on this property\'s leases yet. Add them in the web app.';
+
+  @override
+  String get noActiveLeasesOnProperty => 'This property has no active leases.';
+
+  @override
+  String get monthNotInLease => 'This month isn\'t part of the lease.';
+
+  @override
+  String get draft => 'Draft';
+
+  @override
+  String get next => 'Continue';
+
+  @override
+  String get calculating => 'Calculating…';
+
+  @override
+  String publishedToTenants(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Published. $count tenants were notified.',
+      one: 'Published. 1 tenant was notified.',
+      zero: 'Nothing new to publish.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String allPublished(String month) {
+    return 'Everything for $month is published.';
+  }
+
+  @override
+  String get chooseProperty => 'Choose a property';
 }

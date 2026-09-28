@@ -13,6 +13,7 @@ import 'package:rentlog/features/auth/data/auth_repository.dart';
 import 'package:rentlog/features/landlord/data/landlord_repository.dart';
 import 'package:rentlog/features/session/bloc/session_bloc.dart';
 import 'package:rentlog/features/session/data/session_repository.dart';
+import 'package:rentlog/features/settlement/data/settlement_repository.dart';
 import 'package:rentlog/features/tenant/data/tenant_repository.dart';
 import 'package:rentlog/l10n/l10n.dart';
 
@@ -23,6 +24,7 @@ class AppDependencies {
     required this.session,
     required this.tenant,
     required this.landlord,
+    required this.settlement,
     required this.push,
     required this.localeCubit,
     required this.sessionBloc,
@@ -32,6 +34,7 @@ class AppDependencies {
   final SessionRepository session;
   final TenantRepository tenant;
   final LandlordRepository landlord;
+  final SettlementRepository settlement;
   final PushService push;
   final LocaleCubit localeCubit;
   final SessionBloc sessionBloc;
@@ -49,6 +52,7 @@ class RentLogApp extends StatelessWidget {
       RepositoryProvider.value(value: deps.session),
       RepositoryProvider.value(value: deps.tenant),
       RepositoryProvider.value(value: deps.landlord),
+      RepositoryProvider.value(value: deps.settlement),
       RepositoryProvider.value(value: deps.push),
     ],
     child: MultiBlocProvider(

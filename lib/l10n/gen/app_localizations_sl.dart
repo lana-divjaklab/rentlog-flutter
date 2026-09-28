@@ -202,9 +202,6 @@ class AppLocalizationsSl extends AppLocalizations {
   String get navLeases => 'Pogodbe';
 
   @override
-  String get navProperties => 'Nepremičnine';
-
-  @override
   String get monthlyRent => 'Mesečna najemnina';
 
   @override
@@ -360,23 +357,6 @@ class AppLocalizationsSl extends AppLocalizations {
   String get propertiesEmpty => 'Ni nepremičnin. Dodaj jih v spletni aplikaciji.';
 
   @override
-  String unitsCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count enot',
-      few: '$count enote',
-      two: '2 enoti',
-      one: '1 enota',
-      zero: 'Ni enot',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get ownerOccupied => 'Uporablja lastnik';
-
-  @override
   String get markPaid => 'Označi plačano';
 
   @override
@@ -462,10 +442,16 @@ class AppLocalizationsSl extends AppLocalizations {
   String get settingsNotifications => 'Obvestila';
 
   @override
-  String get notificationsOn => 'Vklopljena';
+  String get notificationsSwitch => 'Potisna obvestila';
 
   @override
-  String get notificationsOff => 'Izklopljena. Vklopi jih v nastavitvah telefona.';
+  String get notificationsOnHint => 'Novi stroški za plačilo in opomniki za najemnino.';
+
+  @override
+  String get notificationsOffHint => 'Na tem telefonu izklopljena.';
+
+  @override
+  String get notificationsBlockedHint => 'Blokirana v nastavitvah telefona. Tapni za dovolitev.';
 
   @override
   String get settingsSubscription => 'Naročnina';
@@ -548,4 +534,91 @@ class AppLocalizationsSl extends AppLocalizations {
 
   @override
   String get hideDetails => 'Skrij podrobnosti';
+
+  @override
+  String get navMonth => 'Mesec';
+
+  @override
+  String get stepMeters => 'Števci';
+
+  @override
+  String get stepBills => 'Računi';
+
+  @override
+  String get stepReview => 'Pregled';
+
+  @override
+  String get mainMeter => 'Glavni števec';
+
+  @override
+  String previousReadingValue(String value) {
+    return 'Prejšnje: $value';
+  }
+
+  @override
+  String missingPreviousReading(String month) {
+    return 'Za $month še ni stanja, zato poraba ni izračunana.';
+  }
+
+  @override
+  String openMonth(String month) {
+    return 'Odpri $month';
+  }
+
+  @override
+  String get noMeteredUtilities => 'Ta nepremičnina nima števcev.';
+
+  @override
+  String get totalBill => 'Skupni račun';
+
+  @override
+  String get totalUsage => 'Skupna poraba';
+
+  @override
+  String usageFromMeters(String usage) {
+    return 'Poraba iz števcev: $usage';
+  }
+
+  @override
+  String get usageFromMetersMissing => 'Poraba se pokaže, ko sta vneseni obe stanji števca.';
+
+  @override
+  String get noCostsToEnter => 'Pogodbe na tej nepremičnini še nimajo pravil stroškov. Dodaj jih v spletni aplikaciji.';
+
+  @override
+  String get noActiveLeasesOnProperty => 'Ta nepremičnina nima aktivnih pogodb.';
+
+  @override
+  String get monthNotInLease => 'Ta mesec ni del pogodbe.';
+
+  @override
+  String get draft => 'Osnutek';
+
+  @override
+  String get next => 'Naprej';
+
+  @override
+  String get calculating => 'Računam …';
+
+  @override
+  String publishedToTenants(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Objavljeno. Obveščenih je $count najemnikov.',
+      few: 'Objavljeno. Obveščeni so $count najemniki.',
+      two: 'Objavljeno. Obveščena sta 2 najemnika.',
+      one: 'Objavljeno. Obveščen je 1 najemnik.',
+      zero: 'Ni česa novega za objavo.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String allPublished(String month) {
+    return 'Vse za $month je objavljeno.';
+  }
+
+  @override
+  String get chooseProperty => 'Izberi nepremičnino';
 }

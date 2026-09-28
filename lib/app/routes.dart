@@ -13,7 +13,7 @@ abstract final class AppRoutes {
 
   static const landlordOverview = '/landlord';
   static const landlordLeases = '/landlord/leases';
-  static const landlordProperties = '/landlord/properties';
+  static const landlordMonth = '/landlord/month';
   static const landlordSettings = '/landlord/settings';
 
   static String leaseDetail(String leaseId) => '/landlord/leases/$leaseId';

@@ -98,10 +98,16 @@ class ConvexClient {
   }
 
   /// Convex validators reject `null` for optional fields; they expect the
-  /// key to be absent.
+  /// key to be absent — at any depth, e.g. inside a list of entries.
   static Map<String, Object?> _withoutNulls(Map<String, Object?> args) => {
     for (final entry in args.entries)
-      if (entry.value != null) entry.key: entry.value,
+      if (entry.value != null) entry.key: _clean(entry.value),
+  };
+
+  static Object? _clean(Object? value) => switch (value) {
+    final Map<String, Object?> map => _withoutNulls(map),
+    final List<Object?> list => [for (final item in list) _clean(item)],
+    _ => value,
   };
 }
 

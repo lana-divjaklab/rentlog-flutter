@@ -17,6 +17,12 @@ sealed class SettingsEvent with _$SettingsEvent {
   /// The app language changed; emails and pushes should follow.
   const factory SettingsEvent.languageSynced(String locale) = SettingsLanguageSynced;
   const factory SettingsEvent.deletionRequested() = SettingsDeletionRequested;
+  const factory SettingsEvent.notificationsToggled({required bool enabled}) =
+      SettingsNotificationsToggled;
+
+  /// Back from the phone's settings, where permission may have changed.
+  const factory SettingsEvent.notificationsRechecked() =
+      SettingsNotificationsRechecked;
 }
 
 @freezed
@@ -24,7 +30,9 @@ abstract class SettingsState with _$SettingsState {
   const factory SettingsState({
     /// Only for landlords; tenants have no plan of their own.
     LoadState<BillingInfo>? billing,
-    bool? notificationsOn,
+    /// Null until known.
+    PushStatus? notifications,
+    @Default(false) bool notificationsBusy,
     @Default('') String version,
     @Default(false) bool deleting,
 
@@ -44,6 +52,10 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     on<SettingsStarted>(_onStarted);
     on<SettingsLanguageSynced>(_onLanguage);
     on<SettingsDeletionRequested>(_onDelete);
+    on<SettingsNotificationsToggled>(_onNotificationsToggled);
+    on<SettingsNotificationsRechecked>(
+      (event, emit) async => emit(state.copyWith(notifications: await _push.status())),
+    );
   }
 
   final SessionRepository _session;
@@ -58,7 +70,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     emit(
       state.copyWith(
         version: '${info.version} (${info.buildNumber})',
-        notificationsOn: _push.isAvailable ? await _push.isPermitted() : null,
+        notifications: await _push.status(),
         billing: organizationId == null ? null : const LoadState.loading(),
       ),
     );
@@ -80,6 +92,34 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       await _session.setLocale(event.locale);
     } on Object {
       // The app already switched; the server catches up next time.
+    }
+  }
+
+  Future<void> _onNotificationsToggled(
+    SettingsNotificationsToggled event,
+    Emitter<SettingsState> emit,
+  ) async {
+    // "Don't Allow" can only be undone in the phone's settings.
+    if (event.enabled && state.notifications == PushStatus.blockedBySystem) {
+      await _push.openSystemSettings();
+      return;
+    }
+    emit(state.copyWith(notificationsBusy: true));
+    try {
+      final status = await _push.setEnabled(
+        enabled: event.enabled,
+        sink: _session,
+      );
+      emit(state.copyWith(notifications: status, notificationsBusy: false));
+    } on Object catch (error, stack) {
+      logError('Switching notifications', error, stack);
+      emit(
+        state.copyWith(
+          notifications: await _push.status(),
+          notificationsBusy: false,
+          error: error,
+        ),
+      );
     }
   }
 

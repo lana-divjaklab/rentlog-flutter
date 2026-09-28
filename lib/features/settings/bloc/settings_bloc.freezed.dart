@@ -56,13 +56,15 @@ extension SettingsEventPatterns on SettingsEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( SettingsStarted value)?  started,TResult Function( SettingsLanguageSynced value)?  languageSynced,TResult Function( SettingsDeletionRequested value)?  deletionRequested,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( SettingsStarted value)?  started,TResult Function( SettingsLanguageSynced value)?  languageSynced,TResult Function( SettingsDeletionRequested value)?  deletionRequested,TResult Function( SettingsNotificationsToggled value)?  notificationsToggled,TResult Function( SettingsNotificationsRechecked value)?  notificationsRechecked,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case SettingsStarted() when started != null:
 return started(_that);case SettingsLanguageSynced() when languageSynced != null:
 return languageSynced(_that);case SettingsDeletionRequested() when deletionRequested != null:
-return deletionRequested(_that);case _:
+return deletionRequested(_that);case SettingsNotificationsToggled() when notificationsToggled != null:
+return notificationsToggled(_that);case SettingsNotificationsRechecked() when notificationsRechecked != null:
+return notificationsRechecked(_that);case _:
   return orElse();
 
 }
@@ -80,13 +82,15 @@ return deletionRequested(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( SettingsStarted value)  started,required TResult Function( SettingsLanguageSynced value)  languageSynced,required TResult Function( SettingsDeletionRequested value)  deletionRequested,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( SettingsStarted value)  started,required TResult Function( SettingsLanguageSynced value)  languageSynced,required TResult Function( SettingsDeletionRequested value)  deletionRequested,required TResult Function( SettingsNotificationsToggled value)  notificationsToggled,required TResult Function( SettingsNotificationsRechecked value)  notificationsRechecked,}){
 final _that = this;
 switch (_that) {
 case SettingsStarted():
 return started(_that);case SettingsLanguageSynced():
 return languageSynced(_that);case SettingsDeletionRequested():
-return deletionRequested(_that);}
+return deletionRequested(_that);case SettingsNotificationsToggled():
+return notificationsToggled(_that);case SettingsNotificationsRechecked():
+return notificationsRechecked(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -100,13 +104,15 @@ return deletionRequested(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( SettingsStarted value)?  started,TResult? Function( SettingsLanguageSynced value)?  languageSynced,TResult? Function( SettingsDeletionRequested value)?  deletionRequested,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( SettingsStarted value)?  started,TResult? Function( SettingsLanguageSynced value)?  languageSynced,TResult? Function( SettingsDeletionRequested value)?  deletionRequested,TResult? Function( SettingsNotificationsToggled value)?  notificationsToggled,TResult? Function( SettingsNotificationsRechecked value)?  notificationsRechecked,}){
 final _that = this;
 switch (_that) {
 case SettingsStarted() when started != null:
 return started(_that);case SettingsLanguageSynced() when languageSynced != null:
 return languageSynced(_that);case SettingsDeletionRequested() when deletionRequested != null:
-return deletionRequested(_that);case _:
+return deletionRequested(_that);case SettingsNotificationsToggled() when notificationsToggled != null:
+return notificationsToggled(_that);case SettingsNotificationsRechecked() when notificationsRechecked != null:
+return notificationsRechecked(_that);case _:
   return null;
 
 }
@@ -123,12 +129,14 @@ return deletionRequested(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function( String locale)?  languageSynced,TResult Function()?  deletionRequested,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function( String locale)?  languageSynced,TResult Function()?  deletionRequested,TResult Function( bool enabled)?  notificationsToggled,TResult Function()?  notificationsRechecked,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case SettingsStarted() when started != null:
 return started();case SettingsLanguageSynced() when languageSynced != null:
 return languageSynced(_that.locale);case SettingsDeletionRequested() when deletionRequested != null:
-return deletionRequested();case _:
+return deletionRequested();case SettingsNotificationsToggled() when notificationsToggled != null:
+return notificationsToggled(_that.enabled);case SettingsNotificationsRechecked() when notificationsRechecked != null:
+return notificationsRechecked();case _:
   return orElse();
 
 }
@@ -146,12 +154,14 @@ return deletionRequested();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function( String locale)  languageSynced,required TResult Function()  deletionRequested,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function( String locale)  languageSynced,required TResult Function()  deletionRequested,required TResult Function( bool enabled)  notificationsToggled,required TResult Function()  notificationsRechecked,}) {final _that = this;
 switch (_that) {
 case SettingsStarted():
 return started();case SettingsLanguageSynced():
 return languageSynced(_that.locale);case SettingsDeletionRequested():
-return deletionRequested();}
+return deletionRequested();case SettingsNotificationsToggled():
+return notificationsToggled(_that.enabled);case SettingsNotificationsRechecked():
+return notificationsRechecked();}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -165,12 +175,14 @@ return deletionRequested();}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function( String locale)?  languageSynced,TResult? Function()?  deletionRequested,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function( String locale)?  languageSynced,TResult? Function()?  deletionRequested,TResult? Function( bool enabled)?  notificationsToggled,TResult? Function()?  notificationsRechecked,}) {final _that = this;
 switch (_that) {
 case SettingsStarted() when started != null:
 return started();case SettingsLanguageSynced() when languageSynced != null:
 return languageSynced(_that.locale);case SettingsDeletionRequested() when deletionRequested != null:
-return deletionRequested();case _:
+return deletionRequested();case SettingsNotificationsToggled() when notificationsToggled != null:
+return notificationsToggled(_that.enabled);case SettingsNotificationsRechecked() when notificationsRechecked != null:
+return notificationsRechecked();case _:
   return null;
 
 }
@@ -311,10 +323,111 @@ String toString() {
 
 
 /// @nodoc
+
+
+class SettingsNotificationsToggled implements SettingsEvent {
+  const SettingsNotificationsToggled({required this.enabled});
+  
+
+ final  bool enabled;
+
+/// Create a copy of SettingsEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$SettingsNotificationsToggledCopyWith<SettingsNotificationsToggled> get copyWith => _$SettingsNotificationsToggledCopyWithImpl<SettingsNotificationsToggled>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is SettingsNotificationsToggled&&(identical(other.enabled, enabled) || other.enabled == enabled));
+}
+
+
+@override
+int get hashCode {
+    return Object.hash(runtimeType,enabled);
+}
+
+@override
+String toString() {
+    return 'SettingsEvent.notificationsToggled(enabled: $enabled)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $SettingsNotificationsToggledCopyWith<$Res> implements $SettingsEventCopyWith<$Res> {
+  factory $SettingsNotificationsToggledCopyWith(SettingsNotificationsToggled value, $Res Function(SettingsNotificationsToggled) _then) = _$SettingsNotificationsToggledCopyWithImpl;
+@useResult
+$Res call({
+ bool enabled
+});
+
+
+
+
+}
+/// @nodoc
+class _$SettingsNotificationsToggledCopyWithImpl<$Res>
+    implements $SettingsNotificationsToggledCopyWith<$Res> {
+  _$SettingsNotificationsToggledCopyWithImpl(this._self, this._then);
+
+  final SettingsNotificationsToggled _self;
+  final $Res Function(SettingsNotificationsToggled) _then;
+
+/// Create a copy of SettingsEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? enabled = null,}) {
+  return _then(SettingsNotificationsToggled(
+enabled: null == enabled ? _self.enabled : enabled // ignore: cast_nullable_to_non_nullable
+as bool,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class SettingsNotificationsRechecked implements SettingsEvent {
+  const SettingsNotificationsRechecked();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is SettingsNotificationsRechecked);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+    return 'SettingsEvent.notificationsRechecked()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
 mixin _$SettingsState {
 
 /// Only for landlords; tenants have no plan of their own.
- LoadState<BillingInfo>? get billing; bool? get notificationsOn; String get version; bool get deleting;/// Set once deletion went through; the screen then signs out.
+ LoadState<BillingInfo>? get billing;/// Null until known.
+ PushStatus? get notifications; bool get notificationsBusy; String get version; bool get deleting;/// Set once deletion went through; the screen then signs out.
  bool get deleted; Object? get error;
 /// Create a copy of SettingsState
 /// with the given fields replaced by the non-null parameter values.
@@ -327,20 +440,20 @@ $SettingsStateCopyWith<SettingsState> get copyWith => _$SettingsStateCopyWithImp
 @override
 bool operator ==(Object other) {
   final _this = this as SettingsState;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SettingsState&&(identical(other.billing, _this.billing) || other.billing == _this.billing)&&(identical(other.notificationsOn, _this.notificationsOn) || other.notificationsOn == _this.notificationsOn)&&(identical(other.version, _this.version) || other.version == _this.version)&&(identical(other.deleting, _this.deleting) || other.deleting == _this.deleting)&&(identical(other.deleted, _this.deleted) || other.deleted == _this.deleted)&&const DeepCollectionEquality().equals(other.error, _this.error));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SettingsState&&(identical(other.billing, _this.billing) || other.billing == _this.billing)&&(identical(other.notifications, _this.notifications) || other.notifications == _this.notifications)&&(identical(other.notificationsBusy, _this.notificationsBusy) || other.notificationsBusy == _this.notificationsBusy)&&(identical(other.version, _this.version) || other.version == _this.version)&&(identical(other.deleting, _this.deleting) || other.deleting == _this.deleting)&&(identical(other.deleted, _this.deleted) || other.deleted == _this.deleted)&&const DeepCollectionEquality().equals(other.error, _this.error));
 }
 
 
 @override
 int get hashCode {
   final _this = this as SettingsState;
-  return Object.hash(runtimeType,_this.billing,_this.notificationsOn,_this.version,_this.deleting,_this.deleted,const DeepCollectionEquality().hash(_this.error));
+  return Object.hash(runtimeType,_this.billing,_this.notifications,_this.notificationsBusy,_this.version,_this.deleting,_this.deleted,const DeepCollectionEquality().hash(_this.error));
 }
 
 @override
 String toString() {
   final _this = this as SettingsState;
-  return 'SettingsState(billing: ${_this.billing}, notificationsOn: ${_this.notificationsOn}, version: ${_this.version}, deleting: ${_this.deleting}, deleted: ${_this.deleted}, error: ${_this.error})';
+  return 'SettingsState(billing: ${_this.billing}, notifications: ${_this.notifications}, notificationsBusy: ${_this.notificationsBusy}, version: ${_this.version}, deleting: ${_this.deleting}, deleted: ${_this.deleted}, error: ${_this.error})';
 }
 
 
@@ -351,7 +464,7 @@ abstract mixin class $SettingsStateCopyWith<$Res>  {
   factory $SettingsStateCopyWith(SettingsState value, $Res Function(SettingsState) _then) = _$SettingsStateCopyWithImpl;
 @useResult
 $Res call({
- LoadState<BillingInfo>? billing, bool? notificationsOn, String version, bool deleting, bool deleted, Object? error
+ LoadState<BillingInfo>? billing, PushStatus? notifications, bool notificationsBusy, String version, bool deleting, bool deleted, Object? error
 });
 
 
@@ -368,11 +481,12 @@ class _$SettingsStateCopyWithImpl<$Res>
 
 /// Create a copy of SettingsState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? billing = freezed,Object? notificationsOn = freezed,Object? version = null,Object? deleting = null,Object? deleted = null,Object? error = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? billing = freezed,Object? notifications = freezed,Object? notificationsBusy = null,Object? version = null,Object? deleting = null,Object? deleted = null,Object? error = freezed,}) {
   return _then(SettingsState(
 billing: freezed == billing ? _self.billing : billing // ignore: cast_nullable_to_non_nullable
-as LoadState<BillingInfo>?,notificationsOn: freezed == notificationsOn ? _self.notificationsOn : notificationsOn // ignore: cast_nullable_to_non_nullable
-as bool?,version: null == version ? _self.version : version // ignore: cast_nullable_to_non_nullable
+as LoadState<BillingInfo>?,notifications: freezed == notifications ? _self.notifications : notifications // ignore: cast_nullable_to_non_nullable
+as PushStatus?,notificationsBusy: null == notificationsBusy ? _self.notificationsBusy : notificationsBusy // ignore: cast_nullable_to_non_nullable
+as bool,version: null == version ? _self.version : version // ignore: cast_nullable_to_non_nullable
 as String,deleting: null == deleting ? _self.deleting : deleting // ignore: cast_nullable_to_non_nullable
 as bool,deleted: null == deleted ? _self.deleted : deleted // ignore: cast_nullable_to_non_nullable
 as bool,error: freezed == error ? _self.error : error ,
@@ -472,10 +586,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( LoadState<BillingInfo>? billing,  bool? notificationsOn,  String version,  bool deleting,  bool deleted,  Object? error)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( LoadState<BillingInfo>? billing,  PushStatus? notifications,  bool notificationsBusy,  String version,  bool deleting,  bool deleted,  Object? error)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SettingsState() when $default != null:
-return $default(_that.billing,_that.notificationsOn,_that.version,_that.deleting,_that.deleted,_that.error);case _:
+return $default(_that.billing,_that.notifications,_that.notificationsBusy,_that.version,_that.deleting,_that.deleted,_that.error);case _:
   return orElse();
 
 }
@@ -493,10 +607,10 @@ return $default(_that.billing,_that.notificationsOn,_that.version,_that.deleting
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( LoadState<BillingInfo>? billing,  bool? notificationsOn,  String version,  bool deleting,  bool deleted,  Object? error)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( LoadState<BillingInfo>? billing,  PushStatus? notifications,  bool notificationsBusy,  String version,  bool deleting,  bool deleted,  Object? error)  $default,) {final _that = this;
 switch (_that) {
 case _SettingsState():
-return $default(_that.billing,_that.notificationsOn,_that.version,_that.deleting,_that.deleted,_that.error);case _:
+return $default(_that.billing,_that.notifications,_that.notificationsBusy,_that.version,_that.deleting,_that.deleted,_that.error);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -513,10 +627,10 @@ return $default(_that.billing,_that.notificationsOn,_that.version,_that.deleting
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( LoadState<BillingInfo>? billing,  bool? notificationsOn,  String version,  bool deleting,  bool deleted,  Object? error)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( LoadState<BillingInfo>? billing,  PushStatus? notifications,  bool notificationsBusy,  String version,  bool deleting,  bool deleted,  Object? error)?  $default,) {final _that = this;
 switch (_that) {
 case _SettingsState() when $default != null:
-return $default(_that.billing,_that.notificationsOn,_that.version,_that.deleting,_that.deleted,_that.error);case _:
+return $default(_that.billing,_that.notifications,_that.notificationsBusy,_that.version,_that.deleting,_that.deleted,_that.error);case _:
   return null;
 
 }
@@ -528,12 +642,14 @@ return $default(_that.billing,_that.notificationsOn,_that.version,_that.deleting
 
 
 class _SettingsState implements SettingsState {
-  const _SettingsState({this.billing, this.notificationsOn, this.version = '', this.deleting = false, this.deleted = false, this.error});
+  const _SettingsState({this.billing, this.notifications, this.notificationsBusy = false, this.version = '', this.deleting = false, this.deleted = false, this.error});
   
 
 /// Only for landlords; tenants have no plan of their own.
 @override final  LoadState<BillingInfo>? billing;
-@override final  bool? notificationsOn;
+/// Null until known.
+@override final  PushStatus? notifications;
+@override@JsonKey() final  bool notificationsBusy;
 @override@JsonKey() final  String version;
 @override@JsonKey() final  bool deleting;
 /// Set once deletion went through; the screen then signs out.
@@ -550,18 +666,18 @@ _$SettingsStateCopyWith<_SettingsState> get copyWith => __$SettingsStateCopyWith
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SettingsState&&(identical(other.billing, billing) || other.billing == billing)&&(identical(other.notificationsOn, notificationsOn) || other.notificationsOn == notificationsOn)&&(identical(other.version, version) || other.version == version)&&(identical(other.deleting, deleting) || other.deleting == deleting)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&const DeepCollectionEquality().equals(other.error, error));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SettingsState&&(identical(other.billing, billing) || other.billing == billing)&&(identical(other.notifications, notifications) || other.notifications == notifications)&&(identical(other.notificationsBusy, notificationsBusy) || other.notificationsBusy == notificationsBusy)&&(identical(other.version, version) || other.version == version)&&(identical(other.deleting, deleting) || other.deleting == deleting)&&(identical(other.deleted, deleted) || other.deleted == deleted)&&const DeepCollectionEquality().equals(other.error, error));
 }
 
 
 @override
 int get hashCode {
-    return Object.hash(runtimeType,billing,notificationsOn,version,deleting,deleted,const DeepCollectionEquality().hash(error));
+    return Object.hash(runtimeType,billing,notifications,notificationsBusy,version,deleting,deleted,const DeepCollectionEquality().hash(error));
 }
 
 @override
 String toString() {
-    return 'SettingsState(billing: $billing, notificationsOn: $notificationsOn, version: $version, deleting: $deleting, deleted: $deleted, error: $error)';
+    return 'SettingsState(billing: $billing, notifications: $notifications, notificationsBusy: $notificationsBusy, version: $version, deleting: $deleting, deleted: $deleted, error: $error)';
 }
 
 
@@ -572,7 +688,7 @@ abstract mixin class _$SettingsStateCopyWith<$Res> implements $SettingsStateCopy
   factory _$SettingsStateCopyWith(_SettingsState value, $Res Function(_SettingsState) _then) = __$SettingsStateCopyWithImpl;
 @override @useResult
 $Res call({
- LoadState<BillingInfo>? billing, bool? notificationsOn, String version, bool deleting, bool deleted, Object? error
+ LoadState<BillingInfo>? billing, PushStatus? notifications, bool notificationsBusy, String version, bool deleting, bool deleted, Object? error
 });
 
 
@@ -589,11 +705,12 @@ class __$SettingsStateCopyWithImpl<$Res>
 
 /// Create a copy of SettingsState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? billing = freezed,Object? notificationsOn = freezed,Object? version = null,Object? deleting = null,Object? deleted = null,Object? error = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? billing = freezed,Object? notifications = freezed,Object? notificationsBusy = null,Object? version = null,Object? deleting = null,Object? deleted = null,Object? error = freezed,}) {
   return _then(_SettingsState(
 billing: freezed == billing ? _self.billing : billing // ignore: cast_nullable_to_non_nullable
-as LoadState<BillingInfo>?,notificationsOn: freezed == notificationsOn ? _self.notificationsOn : notificationsOn // ignore: cast_nullable_to_non_nullable
-as bool?,version: null == version ? _self.version : version // ignore: cast_nullable_to_non_nullable
+as LoadState<BillingInfo>?,notifications: freezed == notifications ? _self.notifications : notifications // ignore: cast_nullable_to_non_nullable
+as PushStatus?,notificationsBusy: null == notificationsBusy ? _self.notificationsBusy : notificationsBusy // ignore: cast_nullable_to_non_nullable
+as bool,version: null == version ? _self.version : version // ignore: cast_nullable_to_non_nullable
 as String,deleting: null == deleting ? _self.deleting : deleting // ignore: cast_nullable_to_non_nullable
 as bool,deleted: null == deleted ? _self.deleted : deleted // ignore: cast_nullable_to_non_nullable
 as bool,error: freezed == error ? _self.error : error ,
